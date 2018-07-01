@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Todos from './components/Todos';
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -10,21 +11,6 @@ const goals = [
   { title: 'PR 코드 리뷰를 응용한 개발 프로세스를 익힌다.', completed: false },
   { title: 'React 로 간단한 노트 앱을 만들어본다.', completed: false },
 ];
-
-const Todos = (props) => (
-  <div className="Todos">
-    <div>
-      {props.title}
-    </div>
-    <ul>
-      {props.items.map((item, idx) => (
-        <li key={idx}>
-          <label><input type="checkbox" defaultChecked={item.completed} /> {item.title}</label>
-        </li>
-      ))}
-    </ul>
-  </div>
-)
 
 class App extends Component {
   render() {
