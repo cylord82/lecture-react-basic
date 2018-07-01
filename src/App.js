@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Todos from "./components/Todos";
 import Timer from "./components/Timer";
 import Header from "./components/Header";
+import BindHandler from "./components/BindHandler";
 import "./App.css";
 
 const goals = [
@@ -23,6 +24,8 @@ class App extends Component {
           expireDate={"2018-07-01T17:00:00+09:00"}
           onComplete={console.log("종료 됐다네? ")}
         />
+
+        <BindHandler />
       </div>
     );
   }
