@@ -3,23 +3,23 @@ import logo from "./logo.svg";
 import "./App.css";
 
 const goals = [
-  'React 개발에 필요한 환경을 구축한다.',
-  '새로운 자바스크립트 문법을 익힌다. ES2015(ES6), ES7, ES8',
-  '개발 편의를 위한 VSCode IDE를 익힌다.',
-  '기본적인 Git 사용법을 익힌다.',
-  'PR 코드 리뷰를 응용한 개발 프로세스를 익힌다.',
-  'React 로 간단한 노트 앱을 만들어본다.',
+  { title: 'React 개발에 필요한 환경을 구축한다.', completed: true },
+  { title: '새로운 자바스크립트 문법을 익힌다. ES2015(ES6), ES7, ES8', completed: false },
+  { title: '개발 편의를 위한 VSCode IDE를 익힌다.', completed: false },
+  { title: '기본적인 Git 사용법을 익힌다.', completed: false },
+  { title: 'PR 코드 리뷰를 응용한 개발 프로세스를 익힌다.', completed: false },
+  { title: 'React 로 간단한 노트 앱을 만들어본다.', completed: false },
 ];
 
-const LectureGoalList = () => (
-  <div className="LectureGoalList">
+const Todos = (props) => (
+  <div className="Todos">
     <div>
-      강의 목표
+      {props.title}
     </div>
     <ul>
-      {goals.map((goal, idx) => (
+      {props.items.map((item, idx) => (
         <li key={idx}>
-          <label><input type="checkbox" /> {goal}</label>
+          <label><input type="checkbox" defaultChecked={item.completed} /> {item.title}</label>
         </li>
       ))}
     </ul>
@@ -38,7 +38,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
-        <LectureGoalList />
+        <Todos title="강의목표" items={goals} />
       </div>
     );
   }
