@@ -27,6 +27,7 @@ class Timer extends Component {
 
   render() {
     if (moment(this.props.expireDate) < this.state.date) {
+      this.props.onComplete && this.props.onComplete();
       return <div>종료 되었습니다</div>;
     }
 

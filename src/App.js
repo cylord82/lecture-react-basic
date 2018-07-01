@@ -19,7 +19,10 @@ class App extends Component {
       <div className="App">
         <Header />
         <Todos title="강의목표" items={goals} />
-        <Timer expireDate={"2018-07-01T17:00:00+09:00"} />
+        <Timer
+          expireDate={"2018-07-01T17:00:00+09:00"}
+          onComplete={console.log("종료 됐다네? ")}
+        />
       </div>
     );
   }
