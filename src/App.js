@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Todos from "./components/Todos";
 import Timer from "./components/Timer";
 import Header from "./components/Header";
+import CompareImVsMu from "./components/CompareImVsMu";
 import "./App.css";
 
 const goals = [
@@ -34,6 +35,8 @@ class App extends Component {
             onComplete={this.completeTimer}
           />
         )}
+
+        <CompareImVsMu />
       </div>
     );
   }
