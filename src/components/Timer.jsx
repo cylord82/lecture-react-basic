@@ -1,75 +1,48 @@
 import React, { Component } from "react";
+import moment from "moment";
+import "moment/locale/ko";
+moment.locale("ko");
 
+const TIME_FORMAT = "A h:mm";
 class Timer extends Component {
   constructor(props) {
-    console.log("Mounting: 1. constructor");
     super(props);
+
     this.state = {
-      status: "Mounting",
-      date: null
+      date: moment()
     };
-  }
 
-  static getDerivedStateFromProps(props, state) {
-    if (state.status === "Mounting") {
-      console.log("Mounting: 2. static getDerivedStateFromProps", props, state);
-    }
-    if (state.status === "Mounted") {
-      console.log("Updating: 1. static getDerivedStateFromProps", props, state);
-    }
-
-    return {
-      date: new Date()
-    };
+    this.nTimer = setInterval(() => {
+      this.setState({
+        date: moment()
+      });
+    }, 1000);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.status === "Mounted") {
-      console.log("Updating: 2. shouldComponentUpdate --> true");
-    }
-    return true;
+    const prevDateStr = this.state.date.format(TIME_FORMAT);
+    const nextDateStr = nextState.date.format(TIME_FORMAT);
+    return prevDateStr !== nextDateStr;
   }
 
   render() {
-    if (this.state.status === "Mounting") {
-      console.log("Mounting: 3. render");
+    if (moment(this.props.expireDate) < this.state.date) {
+      return <div>종료 되었습니다</div>;
     }
 
-    if (this.state.status === "Mounted") {
-      console.log("Updating: 3. render");
-    }
-
-    return <div>{this.state.date.toLocaleTimeString()}</div>;
+    return (
+      <div>
+        <div>현재시간은 {this.state.date.format(TIME_FORMAT)}</div>
+        <div>{moment(this.props.expireDate).fromNow()}에 강의 종료 합니다.</div>
+      </div>
+    );
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    // DOM 에 새로운 값을 쓰기 바로 전에 호출되므로 ref 값으로 DOM을 저장하고 있다면 DOM의 이전 속성을 얻어올수있다.
-    // 이전 스크롤의 값을 유지할때 유용하다.
-    // 반드시 값을 리턴해야한다. 없으면 null 반환
-
-    if (this.state.status === "Mounted") {
-      console.log("Updating: 4. getSnapshotBeforeUpdate");
+  componentWillUnmount() {
+    if (this.nTimer) {
+      clearInterval(this.nTimer);
+      this.nTimer = null;
     }
-
-    return null;
-  }
-
-  componentDidUpdate(prevPropsprevProps, prevState, snapshot) {
-    if (this.state.status === "Mounted") {
-      console.log("Updating: 5. componentDidUpdate");
-    }
-  }
-
-  componentDidMount() {
-    if (this.state.status === "Mounting") {
-      console.log("Mounting: 4. componentDidMount");
-    }
-    setTimeout(() => {
-      this.setState({
-        status: "Mounted",
-        date: new Date()
-      });
-    }, 5000);
   }
 }
 export default Timer;
