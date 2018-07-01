@@ -4,6 +4,7 @@ import "moment/locale/ko";
 moment.locale("ko");
 
 const TIME_FORMAT = "A h:mm";
+
 class Timer extends Component {
   constructor(props) {
     super(props);
@@ -25,9 +26,31 @@ class Timer extends Component {
     return prevDateStr !== nextDateStr;
   }
 
+  checkExpire = () => {
+    if (moment(this.props.expireDate) < this.state.date) {
+      setTimeout(() => {
+        this.props.onComplete && this.props.onComplete();
+      }, 1000);
+    }
+  };
+
+  componentDidMount() {
+    this.checkExpire();
+  }
+
+  componentDidUpdate() {
+    this.checkExpire();
+  }
+
+  componentWillUnmount() {
+    if (this.nTimer) {
+      clearInterval(this.nTimer);
+      this.nTimer = null;
+    }
+  }
+
   render() {
     if (moment(this.props.expireDate) < this.state.date) {
-      this.props.onComplete && this.props.onComplete();
       return <div>종료 되었습니다</div>;
     }
 
@@ -37,13 +60,6 @@ class Timer extends Component {
         <div>{moment(this.props.expireDate).fromNow()}에 강의 종료 합니다.</div>
       </div>
     );
-  }
-
-  componentWillUnmount() {
-    if (this.nTimer) {
-      clearInterval(this.nTimer);
-      this.nTimer = null;
-    }
   }
 }
 export default Timer;

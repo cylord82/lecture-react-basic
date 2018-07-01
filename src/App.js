@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Todos from "./components/Todos";
 import Timer from "./components/Timer";
 import Header from "./components/Header";
-import BatchCounter from "./components/BatchCounter";
 import "./App.css";
 
 const goals = [
@@ -15,17 +14,26 @@ const goals = [
 ];
 
 class App extends Component {
+  state = {
+    isExpired: false
+  };
+
+  completeTimer = () => {
+    this.setState({ isExpired: true });
+  };
+
   render() {
+    const { isExpired } = this.state;
     return (
       <div className="App">
         <Header />
         <Todos title="강의목표" items={goals} />
-        <Timer
-          expireDate={"2018-07-01T17:00:00+09:00"}
-          onComplete={console.log("종료 됐다네? ")}
-        />
-
-        <BatchCounter />
+        {!isExpired && (
+          <Timer
+            expireDate={"2018-07-01T00:00:00+09:00"}
+            onComplete={this.completeTimer}
+          />
+        )}
       </div>
     );
   }
