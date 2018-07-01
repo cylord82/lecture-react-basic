@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Todos from "./components/Todos";
 import Timer from "./components/Timer";
 import Header from "./components/Header";
-import BindHandler from "./components/BindHandler";
+import BatchCounter from "./components/BatchCounter";
 import "./App.css";
 
 const goals = [
@@ -25,7 +25,7 @@ class App extends Component {
           onComplete={console.log("종료 됐다네? ")}
         />
 
-        <BindHandler />
+        <BatchCounter />
       </div>
     );
   }
