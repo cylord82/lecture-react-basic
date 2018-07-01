@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Todos from './components/Todos';
+import Timer from './components/Timer';
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -25,6 +26,7 @@ class App extends Component {
         </p>
 
         <Todos title="강의목표" items={goals} />
+        <Timer />
       </div>
     );
   }
