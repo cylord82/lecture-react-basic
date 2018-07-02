@@ -3,11 +3,13 @@ import moment from "moment";
 import "moment/locale/ko";
 moment.locale("ko");
 
-const TIME_FORMAT = "A h:mm";
+const TIME_FORMAT = "A h:mm:ss";
 
 class Timer extends Component {
   constructor(props) {
     super(props);
+
+    console.log("constructor...");
 
     this.state = {
       date: moment()
@@ -35,6 +37,7 @@ class Timer extends Component {
   };
 
   componentDidMount() {
+    console.log("componentDidMount...");
     this.checkExpire();
   }
 

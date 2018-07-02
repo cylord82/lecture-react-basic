@@ -16,11 +16,16 @@ const goals = [
 
 class App extends Component {
   state = {
-    isExpired: false
+    isExpired: false,
+    resetCounter: 1
   };
 
   completeTimer = () => {
     this.setState({ isExpired: true });
+  };
+
+  handleReset = () => {
+    this.setState({ resetCounter: this.state.resetCounter + 1 });
   };
 
   render() {
@@ -31,10 +36,13 @@ class App extends Component {
         <Todos title="강의목표" items={goals} />
         {!isExpired && (
           <Timer
-            expireDate={"2018-07-01T00:00:00+09:00"}
+            key={this.state.resetCounter}
+            expireDate={"2018-07-04T00:00:00+09:00"}
             onComplete={this.completeTimer}
           />
         )}
+
+        <button onClick={this.handleReset}>reset</button>
 
         <CompareImVsMu />
       </div>
