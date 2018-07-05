@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Todos from "./components/Todos";
 import Timer from "./components/Timer";
 import Header from "./components/Header";
-import CompareImVsMu from "./components/CompareImVsMu";
-import "./App.css";
+import axios from "axios";
+import "./App.less";
 
 const goals = [
   { title: "React 개발에 필요한 환경을 구축한다.", completed: true },
@@ -16,6 +16,7 @@ const goals = [
 
 class App extends Component {
   state = {
+    data: [],
     isExpired: false,
     resetCounter: 1
   };
@@ -28,23 +29,38 @@ class App extends Component {
     this.setState({ resetCounter: this.state.resetCounter + 1 });
   };
 
+  componentDidMount() {
+    axios.get("http://api.tvmaze.com/search/shows?q=girls").then(({ data }) => {
+      this.setState({ data });
+    });
+  }
+
   render() {
-    const { isExpired } = this.state;
+    const { isExpired, data } = this.state;
     return (
       <div className="App">
         <Header />
-        <Todos title="강의목표" items={goals} />
-        {!isExpired && (
-          <Timer
-            key={this.state.resetCounter}
-            expireDate={"2018-07-04T00:00:00+09:00"}
-            onComplete={this.completeTimer}
-          />
-        )}
 
-        <button onClick={this.handleReset}>reset</button>
+        <div className="wrap-todo">
+          <Todos title="강의목표" items={goals} />
+          {!isExpired && (
+            <Timer
+              key={this.state.resetCounter}
+              expireDate={"2018-07-04T00:00:00+09:00"}
+              onComplete={this.completeTimer}
+            />
+          )}
+        </div>
 
-        <CompareImVsMu />
+        <ul>
+          {data.map((item, idx) => {
+            return (
+              <li key={idx}>
+                <img src={item.show.image.medium} />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }

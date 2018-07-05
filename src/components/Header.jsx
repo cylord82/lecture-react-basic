@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "../logo.svg";
+import "./Header.less";
 
 class Header extends Component {
   state = {
@@ -19,7 +20,7 @@ class Header extends Component {
     const { isRolling, title } = this.state;
 
     return (
-      <header className="App-header">
+      <header className="Header">
         <div onClick={this.handleLogoClick}>
           <img
             src={logo}
